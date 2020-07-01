@@ -1,0 +1,40 @@
+/* Background Colors */
+.bgDarkBlue {
+  background-color: #2f495e;
+}
+.bgGreen {
+  background-color: #00c58e;
+}
+.bgGreenDark {
+  background-color: #008f65;
+}
+.bgGrey {
+  background-color: grey;
+}
+.bgLightGrey {
+  background-color: #e3e8f0;
+}
+.bgCharcoal {
+  background-color: #2b2b2b;
+}
+
+/* Text Colors */
+
+.textDarkBlue {
+  color: #2f495e;
+}
+.textGreen {
+  color: #00c58e;
+}
+.textGreenDark {
+  color: #008f65;
+}
+.textLightGrey {
+  color: #e3e8f0;
+}
+.textGrey {
+  color: grey;
+}
+.textCharcoal {
+  color: #2b2b2b;
+}

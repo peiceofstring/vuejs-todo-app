@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vue ToDo APP</title>
+    <script
+      type="text/javascript"
+      src="http://unpkg.com/vue"
+      charset="utf-8"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css"
+    />
+    <link rel="stylesheet" href="src/assets/css/globalStyle.css"
+  </head>
+  <body>
+    <div id="appContainer" class="">
+      <!-- Header -->
+      <div id="header" class="">
+        <h1 id="listTitle"><i class="fa fa-list"> </i> {{toDoListTitle}}</h1>
+        <div id="inputContainer" class="flexContainer">
+          <input
+            id="userInput"
+            class="flexGrow10"
+            v-model="textInputGet"
+            @keyup.enter="addListItem()"
+            type="text"
+            placeholder="New Item..."
+          />
+          <button
+            id="addButton"
+            @click="addListItem"
+            class="flexGrow1"
+            type="button"
+            name="button"
+          >
+            ADD
+          </button>
+        </div>
+      </div>
+      <!-- List -->
+      <div id="listMainContainer" class="">
+        <ul id="listContainer">
+          <li
+            v-for=" items in listItemsArray"
+            @click="toggleCheckMark(items)"
+            class="listItemStyle"
+          >
+            <i
+              v-model.isChecked="items.isChecked"
+              v-bind:check="items.isChecked"
+              :class="[items.isChecked ? 'fa-check-square-o' : 'fa-square-o ']"
+              class="fa fa-size checkBoxStyle hvr-grow"
+            >
+            </i>
+
+            <span
+              :class="[items.isChecked ? 'marked' : '']"
+              class="listItemTextStyle"
+            >
+              {{items.listItem}}
+            </span>
+            <i
+              @click="removeListItem()"
+              class="fa fa-size fa-times-rectangle closeBtnStyle hvr-buzz-out"
+            ></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var appContainer = new Vue({
+        el: "#appContainer",
+        data: {
+          toDoListTitle: "My To Do List",
+          textInputGet: "",
+          listItemsArray: [
+            { listItem: "First Item", isChecked: false },
+            { listItem: "Second Item", isChecked: true }
+          ]
+        },
+        methods: {
+          // Add New Item
+          addListItem: function() {
+            var listItemVar = this.textInputGet.trim();
+            if (listItemVar) {
+              this.listItemsArray.push({
+                listItem: listItemVar,
+                isChecked: false
+              });
+              this.textInputGet = "";
+            }
+          },
+
+          //Remove item
+          removeListItem: function(itemIndex) {
+            this.listItemsArray.splice(itemIndex, 1);
+          },
+
+          // Toggle Check Mark
+          toggleCheckMark: function(items) {
+            console.log(items);
+            items.isChecked = !items.isChecked;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+<style media="screen">
+  * {
+    user-select: none;
+  }
+  /* Resets */
+  body {
+    background-color: #2b2b2b;
+  }
+
+  /* Main Styles */
+  #appContainer {
+    width: 600px;
+    margin: auto;
+  }
+  #header {
+    padding: 50px;
+    background-color: #2f495e;
+  }
+  #listTitle {
+    color: #00c58e;
+    margin-left: 15px;
+  }
+  #inputContainer {
+    text-align: center;
+  }
+  #userInput {
+    height: 40px;
+    outline: none;
+    border: none;
+    border-radius: 5px 0 0 5px;
+
+    padding: 0;
+    padding-left: 15px;
+    margin: 0;
+  }
+  #addButton {
+    color: black;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    padding: 0px 15px;
+    margin: 0;
+    background-color: #00c58e;
+    font-weight: bold;
+  }
+  #addButton:hover {
+  }
+
+  #listMainContainer {
+  }
+  #listContainer {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    border: none;
+  }
+  .listItemStyle:nth-child(odd) {
+    background-color: #fff;
+  }
+  .listItemStyle {
+    padding: 15px;
+    position: relative;
+    background-color: lightgrey;
+  }
+  .listItemStyle:hover {
+    background-color: #00c58e;
+  }
+  .listItemTextStyle {
+    margin: auto 25px;
+    word-wrap: break-word;
+    display: inline-block;
+    width: 75%;
+  }
+
+  /* Icon Styling*/
+  .fa-size {
+    font-size: 25px;
+    margin: 12px;
+  }
+  .checkBoxStyle {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .closeBtnStyle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .closeBtnStyle:hover {
+    color: crimson;
+  }
+  /* Helpers */
+  .textCenter {
+    text-align: center;
+  }
+
+  .marked {
+    color: grey;
+    text-decoration: line-through;
+  }
+
+  /*Positioners */
+  .flexContainer {
+    display: flex;
+    align-items: stretch;
+  }
+  .flexGrow1 {
+    flex-grow: 1;
+  }
+  .flexGrow10 {
+    flex-grow: 10;
+  }
+</style>
